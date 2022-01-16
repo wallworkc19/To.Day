@@ -1,0 +1,19 @@
+class UserTasks:
+    def __init__(self, title, date_added):
+        self.title = title
+        self.date_added = date_added
+        self.due_date = ""
+        self.sub_tasks = []
+        self.complete = False
+
+    def addDueDate(self, due_date):
+        self.due_date = due_date
+        print("Due Date Added")
+
+    def addSubTask(self, subTask):
+        self.sub_tasks.append(subTask)
+        print("Sub Task Added")
+
+    def markComplete(self):
+        self.complete = True
+        print("Task is complete now")

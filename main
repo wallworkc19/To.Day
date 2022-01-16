@@ -1,0 +1,232 @@
+from SubTask import SubTask
+from Task import UserTasks
+from datetime import datetime
+
+if __name__ == '__main__':
+    listOfLists = []
+
+
+    def createList():
+        taskList = []
+        listOfLists.append(taskList)
+        print("List created")
+
+
+    # Delete a list
+    def delList():
+        listOfLists[0].clear()
+        print("List of tasks deleted")
+
+
+    # Rename a list
+    def renameList():
+        listName = input("Enter List Name")
+        globals()[listName] = listOfLists[0]
+
+
+    # Add Tasks
+    def addTask():
+        title = input("Enter task name")
+        date_added = datetime.today().strftime('%Y-%m-%d')
+        task = UserTasks(title, date_added)
+        listOfLists[0].append(task)
+        print("Task added")
+
+
+    # Delete tasks
+    def delTask():
+        taskToDel = input("Enter task name to delete")
+        index = 0
+        deleted = False
+        while index < len(listOfLists[0]):
+            if listOfLists[0][index].title == taskToDel:
+                print(listOfLists[0][index])
+                del listOfLists[0][index]
+                deleted = True
+            index += 1
+        if (deleted):
+            print("Task deleted")
+        else:
+            print("No task found")
+
+
+    # Rename Tasks
+    def renameTask():
+        title = input("Enter task name to rename")
+        newName = input("Enter new name")
+        index = 0
+        renamed = False
+        while index < len(listOfLists[0]):
+            if listOfLists[0][index].title == title:
+                print(listOfLists[0][index])
+                listOfLists[0][index].title = newName
+                renamed = True
+            index += 1
+        if renamed:
+            print("Task renamed")
+        else:
+            print("No task found")
+
+
+    # Mark a task complete
+    def markComplete():
+        title = input("Enter task name to mark complete")
+        index = 0
+        marked = False
+        while index < len(listOfLists[0]):
+            if listOfLists[0][index].title == title:
+                print(listOfLists[0][index])
+                listOfLists[0][index].markComplete()
+                marked = True
+            index += 1
+        if (marked):
+            print("Task Completed")
+        else:
+            print("No task found")
+
+
+    # Move a task to diffrent list
+    def moveTask():
+        title = input("Enter task name to move")
+        indexO = 0
+        while indexO < len(listOfLists[0]):
+            if listOfLists[0][indexO].title == title:
+                print(listOfLists[0][indexO])
+                listOfLists[1].append(listOfLists[0][indexO])
+                del listOfLists[0][indexO]
+                index = 0
+                print("Tasks in new list are:")
+                while index < len(listOfLists[1]):
+                    print("Title: ", listOfLists[1][index].title)
+                    print("Date Added: ", listOfLists[1][index].date_added)
+                    print("Due Date: ", listOfLists[1][index].due_date)
+                    print("Completed: ", listOfLists[1][index].complete)
+                    index += 1
+            indexO += 1
+
+
+    # Add Subtask
+    def addSubTask():
+        title = input("Enter task name to add subtask to")
+        subTaskName = input('Enter SubTask Name')
+        subTask = SubTask(subTaskName)
+        index = 0
+        while index < len(listOfLists[0]):
+            if listOfLists[0][index].title == title:
+                print(listOfLists[0][index])
+                listOfLists[0][index].addSubTask(subTask)
+            index += 1
+
+
+    # sort Task
+    def sortTask():
+        print("\n Please make a selection")  # selection menu
+        print("1. Sort by title")  # option to display data
+        print("2. Sort due Date")  # option to reload data
+        print("3. Sort by Date added")  # option to create new record data
+        selectionSort = int(input("Enter Selection"))
+        if selectionSort == 1:
+            sortByTitle()
+        elif selectionSort == 2:
+            sortByDueDate()
+        elif selectionSort == 3:
+            sortByDateAdded()
+        else:
+            print("Wrong selection")
+
+
+    # Sort task by date added
+    def sortByDateAdded():
+        listOfLists[0].sort(key=lambda x: x.date_added)
+        print("Sorted by Date Added")
+
+
+    # Sort task by title
+    def sortByTitle():
+        listOfLists[0].sort(key=lambda x: x.title)
+        print("Sorted by Title")
+
+
+    # Sort task by due date
+    def sortByDueDate():
+        listOfLists[0].sort(key=lambda x: x.due_date)
+        print("Sorted by Due Date")
+
+
+    # Add due date to task
+    def addDueDate():
+        title = input("Enter task name to add due date to")
+        dueDate = input('Enter Due Date (yyyy-mm-dd)')
+        index = 0
+        while index < len(listOfLists[0]):
+            if listOfLists[0][index].title == title:
+                print(listOfLists[0][index])
+                listOfLists[0][index].due_date = dueDate
+            index += 1
+
+
+    # Set reminder to task
+
+    i = 1
+    while i:  # while loop begins
+        print("\n Please make a selection")  # selection menu
+        print("1. Delete List")
+        print("2. Rename List")
+        print("3. Add Task")
+        print("4. Delete Task")
+        print("5. Create Another List")
+        print("6. Rename Task")
+        print("7. Add SubTask")
+        print("8. Mark Task Complete")
+        print("9. Move Task to Another List")
+        print("10. Sort Task")
+        print("11. Add Due Date")
+        print("12. Set Reminder For a Task")
+        print("13. Print Tasks")
+        print("14. Create List")
+        print("15. Exit")
+        ''' input created for user to type in the preferred choice
+          '''
+        selection = int(input("Enter the Selection: "))  # input integer from user goes here
+        '''If statement that processes the inside code when the selection is one,
+          another selection in elif below that closes the program
+          '''
+        if selection == 1:
+            delList()
+        elif selection == 2:
+            renameList()
+        elif selection == 3:
+            addTask()
+        elif selection == 4:
+            delTask()
+        elif selection == 5:
+            createList()
+        elif selection == 6:
+            renameTask()
+        elif selection == 7:
+            addSubTask()
+        elif selection == 8:
+            markComplete()
+        elif selection == 9:
+            moveTask()
+        elif selection == 10:
+            sortTask()
+        elif selection == 11:
+            addDueDate()
+        elif selection == 12:
+            print("reminder")
+        elif selection == 13:
+            index = 0
+            while index < len(listOfLists[0]):
+                print("Title: ", listOfLists[0][index].title)
+                print("Date Added: ", listOfLists[0][index].date_added)
+                print("Due Date: ", listOfLists[0][index].due_date)
+                print("Completed: ", listOfLists[0][index].complete)
+                index += 1
+        elif selection == 14:
+            createList()
+        elif selection == 15:
+            print("\n Exiting the program\n")
+            break
+        else:
+            print("Wrong Selection")
